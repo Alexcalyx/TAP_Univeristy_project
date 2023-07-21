@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>LMAO University Entrance Exam - Marks Entry</title>
+</head>
+<body>
+    <h1>LMAO University Entrance Exam - Marks Entry</h1>
+    <form action="{{ url_for('marks_entry', num_examinees=num_examinees) }}" method="post">
+        {% for i in range(num_examinees) %}
+            <h3>Examinee {{ i + 1 }}</h3>
+            <label for="exam{{ i }}">Enter marks in the format 's 1 2 3 4 5' (s for Science, l for Humanities):</label>
+            <input type="text" id="exam{{ i }}" name="exam{{ i }}"><br>
+            <br>
+        {% endfor %}
+        <input type="submit" value="Calculate Results">
+    </form>
+</body>
+</html>

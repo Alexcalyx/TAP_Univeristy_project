@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>LMAO University Entrance Exam</title>
+</head>
+<body>
+    <h1>LMAO University Entrance Exam</h1>
+    <h2>Settings</h2>
+    <form action="/" method="post" name="passing_criteria_form">
+        <label for="passing_total_score">Passing Total Score:</label>
+        <input type="number" id="passing_total_score" name="passing_total_score" value="{{ passing_total_score }}"><br>
+
+        <label for="passing_subject_score">Passing Subject Score:</label>
+        <input type="number" id="passing_subject_score" name="passing_subject_score" value="{{ passing_subject_score }}"><br>
+
+        <h3>Subjects:</h3>
+        {% for subject in subjects %}
+            <label>{{ subject }}</label><br>
+        {% endfor %}
+
+        <h4>Add Subject:</h4>
+        <label for="new_subject">New Subject:</label>
+        <input type="text" id="new_subject" name="new_subject">
+        <input type="submit" name="add_subject" value="Add"><br>
+
+        <h4>Delete Subject:</h4>
+        <select name="delete_subject">
+            <option value=""></option>
+            {% for subject in subjects %}
+                <option value="{{ subject }}">{{ subject }}</option>
+            {% endfor %}
+        </select>
+        <input type="submit" name="delete_subject" value="Delete"><br>
+
+        <input type="submit" name="update_passing_criteria" value="Update Passing Criteria">
+    </form>
+    <br>
+    <h2>Calculate Exam Results</h2>
+    <form action="/calculate" method="post" name="exam_form">
+        <label for="num_examinees">Number of Examinees:</label>
+        <input type="number" id="num_examinees" name="num_examinees" onkeydown="if (event.keyCode === 13) this.form.submit()"><br>
+
+        <div id="exam_fields_container"></div>
+
+        <script>
+            function showExamMarksFields() {
+                var numExaminees = parseInt(document.getElementById('num_examinees').value);
+                var container = document.getElementById('exam_fields_container');
+                container.innerHTML = '';
+
+                for (var i = 1; i <= numExaminees; i++) {
+                    var examineeHeader = document.createElement('h3');
+                    examineeHeader.textContent = 'Examinee ' + i;
+
+                    var marksLabel = document.createElement('label');
+                    marksLabel.textContent = "Enter marks in the format 's 1 2 3 4 5' (s for Science, l for Humanities):";
+
+                    var marksInput = document.createElement('input');
+                    marksInput.type = 'text';
+                    marksInput.name = 'exam' + i;
+
+                    var lineBreak = document.createElement('br');
+
+                    container.appendChild(examineeHeader);
+                    container.appendChild(marksLabel);
+                    container.appendChild(marksInput);
+                    container.appendChild(lineBreak);
+                }
+
+                var calculateButton = document.createElement('input');
+                calculateButton.type = 'submit';
+                calculateButton.name = 'calculate_results';
+                calculateButton.value = 'Calculate Results';
+
+                container.appendChild(calculateButton);
+            }
+        </script>
+    </form>
+    {% if message %}
+        <p>{{ message }}</p>
+    {% endif %}
+</body>
+</html>
