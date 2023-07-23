@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>LMAO University Entrance Examination</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="top-right">
+    <p>Passing Score: <span id="currentPassingScore">350</span></p>
+    <p>Science Applicant Passing Marks: <span id="sciencePassingMarksValue">160</span></p>
+    <p>Humanities Applicant Passing Marks: <span id="humanitiesPassingMarksValue">160</span></p>
+  </div>
+
+  <h2>LMAO University Entrance Examination</h2>
+  <form>
+    <label for="numberOfApplicants">Number of Applicants:</label>
+    <input type="number" id="numberOfApplicants" min="1" value="1" required>
+    <button type="button" onclick="createApplicantFields()">Submit</button>
+  </form>
+
+  <div class="change-passing-score" style="display: none;">
+    <label for="newPassingScore">Change Passing Score:</label>
+    <input type="number" id="newPassingScore" placeholder="Enter new passing score" min="1" max="1000">
+    <button type="button" onclick="updatePassingScore()">Update</button>
+  </div>
+
+  <div class="subject-container">
+    <label for="subjectToAdd">Add Subject:</label>
+    <input type="text" id="subjectToAdd" placeholder="Enter subject name">
+    <button type="button" id="addSubjectButton">Add Subject</button>
+    <span id="addSubjectMessage"></span>
+  </div>
+
+  <div class="subject-container">
+    <label for="subjectToDelete">Delete Subject:</label>
+    <input type="text" id="subjectToDelete" placeholder="Enter subject name">
+    <button type="button" id="deleteSubjectButton">Delete Subject</button>
+    <span id="deleteSubjectMessage"></span>
+  </div>
+
+  <div id="applicantFields"></div>
+
+  <button type="button" id="calculateButton" style="display: none;" onclick="submitForm()">Calculate Results</button>
+
+  <div id="result"></div> <!-- New element to display the result -->
+
+  <script src="script.js"></script>
+</body>
+</html>
