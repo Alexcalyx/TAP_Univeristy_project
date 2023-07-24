@@ -1,288 +1,315 @@
 // Subject class - Represents a subject with a name
 class Subject {
-    constructor(name) {
-      this.name = name;
-    }
+  constructor(name, type) {
+    this.name = name;
+  }
 }
 
 // Applicant class - Represents an applicant with an applicant type (Science or Humanities) and scores in different subjects
 class Applicant {
-    constructor(applicantType, scores) {
-      this.applicantType = applicantType;
-      this.scores = scores;
-    }
-  
-    // Method to calculate the total score of an applicant
-    getTotalScore() {
-      return this.scores.reduce((sum, score) => sum + score, 0);
-    }
-  
-    // Method to get the score of a specific subject by its index
-    getSubjectScore(subjectIndex) {
-      return this.scores[subjectIndex];
-    }
-  
-    // Method to check if the applicant is of type Science
-    isScienceApplicant() {
-      return this.applicantType === 'science';
-    }
-  
-    // Method to check if the applicant is of type Humanities
-    isHumanitiesApplicant() {
-      return this.applicantType === 'humanities';
-    }
+  constructor(applicantType, scores) {
+    this.applicantType = applicantType;
+    this.scores = scores;
+  }
+
+  // Method to calculate the total score of an applicant
+  getTotalScore() {
+    return this.scores.reduce((sum, score) => sum + score, 0);
+  }
+
+  // Method to get the score of a specific subject by its index
+  getSubjectScore(subjectIndex) {
+    return this.scores[subjectIndex];
+  }
+
+  // Method to check if the applicant is of type Science
+  isScienceApplicant() {
+    return this.applicantType === 'science';
+  }
+
+  // Method to check if the applicant is of type Humanities
+  isHumanitiesApplicant() {
+    return this.applicantType === 'humanities';
+  }
 }
 
 // Exam class - Represents the entrance examination and applicants
 class Exam {
-    constructor() {
-      this.applicants = [];
-      this.subjects = ['English', 'Mathematics', 'Science', 'Japanese', 'Geography'];
-      this.scienceApplicantSubjects = ['English', 'Mathematics', 'Science'];
-      this.humanitiesApplicantSubjects = ['Japanese', 'Geography'];
-    }
-  
-    // Method to add an applicant to the exam
-    addApplicant(applicant) {
-      this.applicants.push(applicant);
-    }
-  
-    // Method to add a new subject to the list of subjects
-    addSubject(subjectName) {
-      // Check if subject already exists
-      if (this.subjects.includes(subjectName)) {
-        return `Subject '${subjectName}' already exists.`;
-      }
-  
-      // Add the new subject
-      this.subjects.push(subjectName);
-      return `Subject '${subjectName}' has been added.`;
-    }
-  
-    // Method to delete an existing subject from the list of subjects
-    deleteSubject(subjectName) {
-      // Check if the subject exists
-      if (!this.subjects.includes(subjectName)) {
-        return `Subject '${subjectName}' does not exist.`;
-      }
-  
-      // Remove the subject from the list
-      this.subjects = this.subjects.filter(subject => subject !== subjectName);
-      return `Subject '${subjectName}' has been deleted.`;
-    }
-  
-    // Method to get the total score required for a particular applicant type (Science or Humanities)
-    getTotalRequiredScore(applicantType) {
-      let requiredScore = 0;
-      if (applicantType === 'science') {
-        // Science applicant needs at least 160 in Mathematics and Science
-        requiredScore = this.scienceApplicantSubjects.reduce((sum, subject) => sum + this.getSubjectScoreIndex(subject) + 1, 0);
-      } else if (applicantType === 'humanities') {
-        // Humanities applicant needs at least 160 in Japanese and Geography
-        requiredScore = this.humanitiesApplicantSubjects.reduce((sum, subject) => sum + this.getSubjectScoreIndex(subject) + 1, 0);
-      }
-      return requiredScore;
-    }
-  
-    // Helper method to get the index of a subject from the subjects array
-    getSubjectScoreIndex(subjectName) {
-      return this.subjects.indexOf(subjectName);
-    }
-}
-
-// Create an instance of the Exam class
-const exam = new Exam();
-
-// Initialize passing score, sciencePassingMarks, and humanitiesPassingMarks
-let passingScore = 350;
-let sciencePassingMarks = 160;
-let humanitiesPassingMarks = 160;
-
-// Function to display the passing score and passing marks on the webapp
-function displayPassingScore() {
-  const passingScoreElement = document.getElementById('currentPassingScore');
-  passingScoreElement.textContent = passingScore;
-
-  const sciencePassingMarksElement = document.getElementById('sciencePassingMarksValue');
-  sciencePassingMarksElement.textContent = sciencePassingMarks;
-
-  const humanitiesPassingMarksElement = document.getElementById('humanitiesPassingMarksValue');
-  humanitiesPassingMarksElement.textContent = humanitiesPassingMarks;
-}
-
-// Function to update the passing score dynamically
-function updatePassingScore() {
-  const newPassingScore = parseInt(document.getElementById('newPassingScore').value);
-
-  if (isNaN(newPassingScore) || newPassingScore < 1 || newPassingScore > 1000) {
-    alert('Please enter a valid passing score between 1 and 1000.');
-    return;
+  constructor() {
+    this.applicants = [];
+    this.subjects = ['English', 'Mathematics', 'Science', 'Japanese', 'Geography'];
+    this.scienceApplicantSubjects = ['Mathematics', 'Science'];
+    this.humanitiesApplicantSubjects = ['Japanese', 'Geography'];
   }
 
-  passingScore = newPassingScore;
-  displayPassingScore();
-  alert(`Passing score has been updated to ${passingScore}.`);
-
-  // Recalculate the number of students who passed with the new passing score
-  const applicants = collectApplicantData();
-  const passedApplicantsCount = countPassedApplicants(applicants);
-  const resultElement = document.getElementById('result');
-  resultElement.textContent = `Number of applicants who passed the two-stage selection: ${passedApplicantsCount}`;
-}
-
-// Function to check if a score is valid (between 0 and 100)
-function isValidScore(score) {
-  return !isNaN(score) && score >= 0 && score <= 100;
-}
-
-// Function to create input fields for entering applicant data
-function createApplicantFields() {
-  const numberOfApplicantsInput = document.getElementById('numberOfApplicants');
-  const numberOfApplicants = parseInt(numberOfApplicantsInput.value);
-
-  if (isNaN(numberOfApplicants) || numberOfApplicants < 1 || numberOfApplicants > 1000) {
-    alert('Number of applicants must be between 1 and 1000.');
-    return;
+  // Method to add an applicant to the exam
+  addApplicant(applicant) {
+    this.applicants.push(applicant);
   }
 
-  const applicantFieldsDiv = document.getElementById('applicantFields');
-  applicantFieldsDiv.innerHTML = '';
+  // Method to add a new subject to the list of subjects
+  addSubject(subjectName) {
+    // Check if subject already exists
+    if (this.subjects.includes(subjectName)) {
+      return `Subject '${subjectName}' already exists.`;
+    }
 
-  for (let i = 1; i <= numberOfApplicants; i++) {
-    const applicantFieldset = document.createElement('fieldset');
-    applicantFieldset.innerHTML = `<legend>Applicant ${i} Scores:</legend>
-    <label for="applicantType${i}">Applicant Type:</label>
-    <select id="applicantType${i}" name="applicantType${i}">
-      <option value="science">Science</option>
-      <option value="humanities">Humanities</option>
-    </select>
-    <br>`;
+    // Add the new subject
+    this.subjects.push(subjectName);
+    return `Subject '${subjectName}' has been added.`;
+  }
 
-    for (const subject of exam.subjects) {
-      applicantFieldset.innerHTML += `
-      <label for="${subject}${i}">${subject} Score:</label>
-      <input type="number" id="${subject}${i}" name="${subject}${i}" value="0" required>
+  // Method to delete an existing subject from the list of subjects
+  deleteSubject(subjectName) {
+    // Check if the subject exists
+    if (!this.subjects.includes(subjectName)) {
+      return `Subject '${subjectName}' does not exist.`;
+    }
+
+    // Remove the subject from the list
+    this.subjects = this.subjects.filter(subject => subject !== subjectName);
+    return `Subject '${subjectName}' has been deleted.`;
+  }
+
+  // Method to get the total score required for a particular applicant type (Science or Humanities)
+  getTotalRequiredScore(applicantType) {
+    const applicantSubjects = applicantType === 'science' ? this.scienceApplicantSubjects : this.humanitiesApplicantSubjects;
+    return applicantSubjects.reduce((sum, subject) => sum + this.getSubjectScoreIndex(subject) + 1, 0);
+  }
+
+  // Helper method to get the index of a subject from the subjects array
+  getSubjectScoreIndex(subjectName) {
+    return this.subjects.indexOf(subjectName);
+  }
+
+  // Method to check if an applicant passes the selection
+  isApplicantPassed(applicant, passingScore, sciencePassingMarks, humanitiesPassingMarks) {
+    const totalScore = applicant.getTotalScore();
+    const isScience = applicant.isScienceApplicant();
+
+    if (totalScore < passingScore) {
+      return false;
+    }
+
+    const requiredPassingMarks = isScience ? sciencePassingMarks : humanitiesPassingMarks;
+    const applicantSubjects = isScience ? this.scienceApplicantSubjects : this.humanitiesApplicantSubjects;
+
+    const subjectPassingMarks = applicantSubjects.reduce((sum, subject) => sum + applicant.getSubjectScore(this.getSubjectScoreIndex(subject)), 0);
+
+    return subjectPassingMarks >= requiredPassingMarks;
+  }
+
+  // Method to count the number of applicants who passed the two-stage selection
+  countPassedApplicants(applicants, passingScore, sciencePassingMarks, humanitiesPassingMarks) {
+    return applicants.filter(applicant => this.isApplicantPassed(applicant, passingScore, sciencePassingMarks, humanitiesPassingMarks)).length;
+  }
+}
+
+// UI class - Handles user interface interactions
+class UI {
+  constructor() {
+    this.exam = new Exam();
+    this.passingScore = 350;
+    this.sciencePassingMarks = 160;
+    this.humanitiesPassingMarks = 160;
+  }
+
+  // Method to display the passing score and passing marks on the webapp
+  displayPassingScore() {
+    document.getElementById('currentPassingScore').textContent = this.passingScore;
+    document.getElementById('sciencePassingMarksValue').textContent = this.sciencePassingMarks;
+    document.getElementById('humanitiesPassingMarksValue').textContent = this.humanitiesPassingMarks;
+  }
+
+  // Method to update the passing score dynamically
+  updatePassingScore() {
+    const newPassingScore = parseInt(document.getElementById('newPassingScore').value);
+
+    if (isNaN(newPassingScore) || newPassingScore < 1 || newPassingScore > 1000) {
+      alert('Please enter a valid passing score between 1 and 1000.');
+      return;
+    }
+
+    this.passingScore = newPassingScore;
+    this.displayPassingScore();
+    alert(`Passing score has been updated to ${this.passingScore}.`);
+  }
+
+  // Method to update the passing marks for Science applicants
+  updateSciencePassingMarks() {
+    const newSciencePassingMarks = parseInt(document.getElementById('sciencePassingMarks').value);
+
+    if (isNaN(newSciencePassingMarks) || newSciencePassingMarks < 0 || newSciencePassingMarks > 1000) {
+      alert('Please enter a valid Science passing marks between 0 and 1000.');
+      return;
+    }
+
+    this.sciencePassingMarks = newSciencePassingMarks;
+    document.getElementById('sciencePassingMarksValue').textContent = this.sciencePassingMarks;
+    alert(`Science passing marks have been updated to ${this.sciencePassingMarks}.`);
+  }
+
+  // Method to update the passing marks for Humanities applicants
+  updateHumanitiesPassingMarks() {
+    const newHumanitiesPassingMarks = parseInt(document.getElementById('humanitiesPassingMarks').value);
+
+    if (isNaN(newHumanitiesPassingMarks) || newHumanitiesPassingMarks < 0 || newHumanitiesPassingMarks > 1000) {
+      alert('Please enter a valid Humanities passing marks between 0 and 1000.');
+      return;
+    }
+
+    this.humanitiesPassingMarks = newHumanitiesPassingMarks;
+    document.getElementById('humanitiesPassingMarksValue').textContent = this.humanitiesPassingMarks;
+    alert(`Humanities passing marks have been updated to ${this.humanitiesPassingMarks}.`);
+  }
+
+  // Method to create input fields for entering applicant data
+  createApplicantFields() {
+    const numberOfApplicantsInput = document.getElementById('numberOfApplicants');
+    const numberOfApplicants = parseInt(numberOfApplicantsInput.value);
+
+    if (isNaN(numberOfApplicants) || numberOfApplicants < 1 || numberOfApplicants > 1000) {
+      alert('Number of applicants must be between 1 and 1000.');
+      return;
+    }
+
+    const applicantFieldsDiv = document.getElementById('applicantFields');
+    applicantFieldsDiv.innerHTML = '';
+
+    for (let i = 1; i <= numberOfApplicants; i++) {
+      const applicantFieldset = document.createElement('fieldset');
+      applicantFieldset.innerHTML = `<legend>Applicant ${i} Scores:</legend>
+      <label for="applicantType${i}">Applicant Type:</label>
+      <select id="applicantType${i}" name="applicantType${i}">
+        <option value="science">Science</option>
+        <option value="humanities">Humanities</option>
+      </select>
       <br>`;
+
+      for (const subject of this.exam.subjects) {
+        applicantFieldset.innerHTML += `
+        <label for="${subject}${i}">${subject} Score:</label>
+        <input type="number" id="${subject}${i}" name="${subject}${i}" value="0" required>
+        <br>`;
+      }
+
+      applicantFieldsDiv.appendChild(applicantFieldset);
     }
 
-    applicantFieldsDiv.appendChild(applicantFieldset);
+    // Show the calculate results button after creating applicant fields
+    document.getElementById('calculateButton').style.display = 'block';
   }
 
-  // Show the calculate results button after creating applicant fields
-  const calculateButton = document.getElementById('calculateButton');
-  calculateButton.style.display = 'block';
+  // Method to collect applicant data from the input fields
+  collectApplicantData() {
+    const numberOfApplicantsInput = document.getElementById('numberOfApplicants');
+    const numberOfApplicants = parseInt(numberOfApplicantsInput.value);
+    const applicants = [];
 
-  // Show the change passing score functionality after creating applicant fields
-  const changePassingScoreDiv = document.querySelector('.change-passing-score');
-  changePassingScoreDiv.style.display = 'block';
-}
+    if (isNaN(numberOfApplicants) || numberOfApplicants < 1 || numberOfApplicants > 1000) {
+      alert('Number of applicants must be between 1 and 1000.');
+      return applicants;
+    }
 
-// Function to collect applicant data from the input fields
-function collectApplicantData() {
-  const numberOfApplicantsInput = document.getElementById('numberOfApplicants');
-  const numberOfApplicants = parseInt(numberOfApplicantsInput.value);
-  const applicants = [];
+    for (let i = 1; i <= numberOfApplicants; i++) {
+      const applicantType = document.getElementById(`applicantType${i}`).value;
+      const scores = [];
 
-  if (isNaN(numberOfApplicants) || numberOfApplicants < 1 || numberOfApplicants > 1000) {
-    alert('Number of applicants must be between 1 and 1000.');
+      for (const subject of this.exam.subjects) {
+        const subjectScore = parseInt(document.getElementById(`${subject}${i}`).value);
+
+        if (!this.isValidScore(subjectScore)) {
+          alert('Subject scores must be between 0 and 100.');
+          return [];
+        }
+
+        scores.push(subjectScore);
+      }
+
+      const applicant = new Applicant(applicantType, scores);
+      applicants.push(applicant);
+    }
+
     return applicants;
   }
 
-  for (let i = 1; i <= numberOfApplicants; i++) {
-    const applicantType = document.getElementById(`applicantType${i}`).value;
-    const scores = [];
+  // Method to check if a score is valid (between 0 and 100)
+  isValidScore(score) {
+    return !isNaN(score) && score >= 0 && score <= 100;
+  }
 
-    for (const subject of exam.subjects) {
-      const subjectScore = parseInt(document.getElementById(`${subject}${i}`).value);
+  // Method to submit the form and display the result on the UI
+  submitForm() {
+    const applicants = this.collectApplicantData();
 
-      if (!isValidScore(subjectScore)) {
-        alert('Subject scores must be between 0 and 100.');
-        return [];
-      }
+    // Display the result on the UI
+    const passedApplicantsCount = this.exam.countPassedApplicants(applicants, this.passingScore, this.sciencePassingMarks, this.humanitiesPassingMarks);
+    document.getElementById('result').textContent = `Number of applicants who passed the two-stage selection: ${passedApplicantsCount}`;
+  }
 
-      scores.push(subjectScore);
+  // Method to add a new subject to the list of subjects
+  addSubjectToList() {
+    const subjectNameInput = document.getElementById('subjectToAdd');
+    const subjectName = subjectNameInput.value.trim();
+
+    if (subjectName === '') {
+      alert('Please enter a valid subject name to add.');
+      return;
     }
 
-    const applicant = new Applicant(applicantType, scores);
-    applicants.push(applicant);
+    const addSubjectMessage = document.getElementById('addSubjectMessage');
+    const message = this.exam.addSubject(subjectName);
+    addSubjectMessage.textContent = message;
+
+    // Clear the input field after adding the subject
+    subjectNameInput.value = '';
+
+    // Update the applicant fields with the new subject
+    this.createApplicantFields();
   }
 
-  return applicants;
-}
+  // Method to delete an existing subject from the list of subjects
+  deleteSubjectFromList() {
+    const subjectNameInput = document.getElementById('subjectToDelete');
+    const subjectName = subjectNameInput.value.trim();
 
-// Function to count the number of applicants who passed the entrance exam
-function countPassedApplicants(applicants) {
-  return applicants.filter(applicant => applicant.getTotalScore() >= passingScore &&
-    applicant.getTotalScore() >= exam.getTotalRequiredScore(applicant.applicantType)
-  ).length;
-}
+    if (subjectName === '') {
+      alert('Please enter a valid subject name to delete.');
+      return;
+    }
 
-// Function to submit the form and display the result on the UI
-function submitForm() {
-  const applicants = collectApplicantData();
+    const deleteSubjectMessage = document.getElementById('deleteSubjectMessage');
+    const message = this.exam.deleteSubject(subjectName);
+    deleteSubjectMessage.textContent = message;
 
-  // Display the result on the UI
-  const passedApplicantsCount = countPassedApplicants(applicants);
-  const resultElement = document.getElementById('result');
-  resultElement.textContent = `Number of applicants who passed the two-stage selection: ${passedApplicantsCount}`;
-}
+    // Clear the input field after deleting the subject
+    subjectNameInput.value = '';
 
-// Function to add a new subject to the list of subjects
-function addSubjectToList() {
-  const subjectNameInput = document.getElementById('subjectToAdd');
-  const subjectName = subjectNameInput.value.trim();
-
-  if (subjectName === '') {
-    alert('Please enter a valid subject name to add.');
-    return;
+    // Update the applicant fields without the deleted subject
+    this.createApplicantFields();
   }
-
-  const addSubjectMessage = document.getElementById('addSubjectMessage');
-  const message = exam.addSubject(subjectName);
-  addSubjectMessage.textContent = message;
-
-  // Clear the input field after adding the subject
-  subjectNameInput.value = '';
-
-  // Update the applicant fields with the new subject
-  createApplicantFields();
-
-  // Show the change passing score functionality after adding a subject
-  const changePassingScoreDiv = document.querySelector('.change-passing-score');
-  changePassingScoreDiv.style.display = 'block';
 }
 
-// Function to delete an existing subject from the list of subjects
-function deleteSubjectFromList() {
-  const subjectNameInput = document.getElementById('subjectToDelete');
-  const subjectName = subjectNameInput.value.trim();
-
-  if (subjectName === '') {
-    alert('Please enter a valid subject name to delete.');
-    return;
-  }
-
-  const deleteSubjectMessage = document.getElementById('deleteSubjectMessage');
-  const message = exam.deleteSubject(subjectName);
-  deleteSubjectMessage.textContent = message;
-
-  // Clear the input field after deleting the subject
-  subjectNameInput.value = '';
-
-  // Update the applicant fields without the deleted subject
-  createApplicantFields();
-
-  // Show the change passing score functionality after deleting a subject
-  const changePassingScoreDiv = document.querySelector('.change-passing-score');
-  changePassingScoreDiv.style.display = 'block';
-}
+// Create an instance of the UI class
+const ui = new UI();
 
 // Display the passing score and passing marks on the webapp
-displayPassingScore();
+ui.displayPassingScore();
+
+// Event listeners for the "Update" buttons
+document.getElementById('updatePassingScoreButton').addEventListener('click', ui.updatePassingScore.bind(ui));
+document.getElementById('updateSciencePassingMarksButton').addEventListener('click', ui.updateSciencePassingMarks.bind(ui));
+document.getElementById('updateHumanitiesPassingMarksButton').addEventListener('click', ui.updateHumanitiesPassingMarks.bind(ui));
+
+// Event listener for the "Submit" button
+document.getElementById('submitApplicantFieldsButton').addEventListener('click', ui.createApplicantFields.bind(ui));
 
 // Event listeners for the "Add subject" and "Delete subject" buttons
-document.getElementById('addSubjectButton').addEventListener('click', addSubjectToList);
-document.getElementById('deleteSubjectButton').addEventListener('click', deleteSubjectFromList);
+document.getElementById('addSubjectButton').addEventListener('click', ui.addSubjectToList.bind(ui));
+document.getElementById('deleteSubjectButton').addEventListener('click', ui.deleteSubjectFromList.bind(ui));
 
 // Event listener for the "Calculate Results" button
-document.getElementById('calculateButton').addEventListener('click', submitForm);
+document.getElementById('calculateButton').addEventListener('click', ui.submitForm.bind(ui));
+
+// Event listener for the modifying applicant subjects
+document.querySelectorAll('input[type="checkbox"]').forEach((checkbox) => {checkbox.addEventListener("change", modifySelectedCheckboxes);})
