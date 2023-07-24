@@ -47,7 +47,23 @@ class Exam {
       return `Subject '${subjectName}' does not exist.`;
     }
 
+    // Check if the subject to be deleted is in the scienceApplicantSubjects or humanitiesApplicantSubjects lists
+    const isScienceSubject = this.scienceApplicantSubjects.includes(subjectName);
+    const isHumanitiesSubject = this.humanitiesApplicantSubjects.includes(subjectName);
+
+    // Remove the subject from the main subjects list
     this.subjects = this.subjects.filter(subject => subject !== subjectName);
+
+    // If the subject is part of the scienceApplicantSubjects list, remove it from there as well
+    if (isScienceSubject) {
+      this.scienceApplicantSubjects = this.scienceApplicantSubjects.filter(subject => subject !== subjectName);
+    }
+
+    // If the subject is part of the humanitiesApplicantSubjects list, remove it from there as well
+    if (isHumanitiesSubject) {
+      this.humanitiesApplicantSubjects = this.humanitiesApplicantSubjects.filter(subject => subject !== subjectName);
+    }
+
     return `Subject '${subjectName}' has been deleted.`;
   }
 
