@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>LMAO University Entrance Examination</title>
-  <link rel="stylesheet" href="styles.css">
+  <title>TAP University Entrance Examination</title>
+  <link rel="stylesheet" href="styles.css"> <!-- Link to an external CSS file for styling -->
 </head>
 <body>
   <div class="top-right">
@@ -11,54 +11,54 @@
     <p>Humanities Applicant Passing Marks: <span id="humanitiesPassingMarksValue">160</span></p>
   </div>
 
-  <h2>LMAO University Entrance Examination</h2>
+  <h2>TAP University Entrance Examination</h2>
 
   <!-- Permanent passing score input field -->
   <div class="change-passing-score">
     <label for="newPassingScore">Change Passing Score:</label>
     <input type="number" id="newPassingScore" placeholder="Enter new passing score" min="1" max="1000">
-    <button type="button" id="updatePassingScoreButton">Update</button>
+    <button type="button" id="updatePassingScoreButton">Update</button> <!-- Button to update the passing score -->
   </div>
 
   <!-- Science and Humanities passing marks input fields -->
   <div class="change-passing-marks">
     <label for="sciencePassingMarks">Change Science Applicant Passing Marks:</label>
     <input type="number" id="sciencePassingMarks" placeholder="Enter new Science passing marks" min="0" max="1000">
-    <button type="button" id="updateSciencePassingMarksButton">Update</button>
+    <button type="button" id="updateSciencePassingMarksButton">Update</button> <!-- Button to update Science passing marks -->
   </div>
 
   <div class="change-passing-marks">
     <label for="humanitiesPassingMarks">Change Humanities Applicant Passing Marks:</label>
     <input type="number" id="humanitiesPassingMarks" placeholder="Enter new Humanities passing marks" min="0" max="1000">
-    <button type="button" id="updateHumanitiesPassingMarksButton">Update</button>
+    <button type="button" id="updateHumanitiesPassingMarksButton">Update</button> <!-- Button to update Humanities passing marks -->
   </div>
 
   <form>
     <label for="numberOfApplicants">Number of Applicants:</label>
     <input type="number" id="numberOfApplicants" min="1" value="1" required>
-    <button type="button" id="submitApplicantFieldsButton">Submit</button>
+    <button type="button" id="submitApplicantFieldsButton">Submit</button> <!-- Button to submit the number of applicants -->
   </form>
 
   <div class="subject-container">
     <label for="subjectToAdd">Add Subject:</label>
     <input type="text" id="subjectToAdd" placeholder="Enter subject name">
-    <button type="button" id="addSubjectButton">Add Subject</button>
-    <span id="addSubjectMessage"></span>
+    <button type="button" id="addSubjectButton">Add Subject</button> <!-- Button to add a new subject -->
+    <span id="addSubjectMessage"></span> <!-- Element to display the result message of adding a subject -->
   </div>
 
   <div class="subject-container">
     <label for="subjectToDelete">Delete Subject:</label>
     <input type="text" id="subjectToDelete" placeholder="Enter subject name">
-    <button type="button" id="deleteSubjectButton">Delete Subject</button>
-    <span id="deleteSubjectMessage"></span>
+    <button type="button" id="deleteSubjectButton">Delete Subject</button> <!-- Button to delete an existing subject -->
+    <span id="deleteSubjectMessage"></span> <!-- Element to display the result message of deleting a subject -->
   </div>
 
-  <div id="applicantFields"></div>
+  <div id="applicantFields"></div> <!-- Container to create applicant fields -->
 
-  <button type="button" id="calculateButton" style="display: none;">Calculate Results</button>
+  <button type="button" id="calculateButton" style="display: none;">Calculate Results</button> <!-- Button to calculate the results -->
 
-  <div id="result"></div> <!-- New element to display the result -->
+  <div id="result"></div> <!-- New element to display the result of the calculation -->
 
-  <script src="script.js"></script>
+  <script src="script.js"></script> <!-- Link to an external JavaScript file for interactive functionality -->
 </body>
 </html>
