@@ -1,10 +1,3 @@
-// Subject class - Represents a subject with a name
-class Subject {
-  constructor(name, type) {
-    this.name = name;
-  }
-}
-
 // Applicant class - Represents an applicant with an applicant type (Science or Humanities) and scores in different subjects
 class Applicant {
   constructor(applicantType, scores) {
@@ -22,14 +15,9 @@ class Applicant {
     return this.scores[subjectIndex];
   }
 
-  // Method to check if the applicant is of type Science
-  isScienceApplicant() {
-    return this.applicantType === 'science';
-  }
-
-  // Method to check if the applicant is of type Humanities
-  isHumanitiesApplicant() {
-    return this.applicantType === 'humanities';
+  // Method to check if the applicant is of a specific type (Science or Humanities)
+  isApplicantOfType(type) {
+    return this.applicantType === type;
   }
 }
 
@@ -47,45 +35,51 @@ class Exam {
     this.applicants.push(applicant);
   }
 
-  // Method to add a new subject to the list of subjects
+  // Helper function to check if a subject already exists in the list of subjects
+  subjectExists(subjectList, subjectName) {
+    return subjectList.includes(subjectName);
+  }
+
+  // Updated addSubject method using the helper function
   addSubject(subjectName) {
-    // Check if subject already exists
-    if (this.subjects.includes(subjectName)) {
+    if (this.subjectExists(this.subjects, subjectName)) {
       return `Subject '${subjectName}' already exists.`;
     }
 
-    // Add the new subject
     this.subjects.push(subjectName);
     return `Subject '${subjectName}' has been added.`;
   }
 
-  // Method to delete an existing subject from the list of subjects
+  // Updated deleteSubject method using the helper function
   deleteSubject(subjectName) {
-    // Check if the subject exists
-    if (!this.subjects.includes(subjectName)) {
+    if (!this.subjectExists(this.subjects, subjectName)) {
       return `Subject '${subjectName}' does not exist.`;
     }
 
-    // Remove the subject from the list
     this.subjects = this.subjects.filter(subject => subject !== subjectName);
     return `Subject '${subjectName}' has been deleted.`;
   }
 
-  // Method to get the total score required for a particular applicant type (Science or Humanities)
-  getTotalRequiredScore(applicantType) {
-    const applicantSubjects = applicantType === 'science' ? this.scienceApplicantSubjects : this.humanitiesApplicantSubjects;
-    return applicantSubjects.reduce((sum, subject) => sum + this.getSubjectScoreIndex(subject) + 1, 0);
-  }
-
-  // Helper method to get the index of a subject from the subjects array
+  // Helper function to get the index of a subject from the subjects array
   getSubjectScoreIndex(subjectName) {
     return this.subjects.indexOf(subjectName);
   }
 
-  // Method to check if an applicant passes the selection
+  // Helper function to get the total score required for a particular applicant type
+  getTotalRequiredScoreForApplicantType(applicantType) {
+    const applicantSubjects = applicantType === 'science' ? this.scienceApplicantSubjects : this.humanitiesApplicantSubjects;
+    return applicantSubjects.reduce((sum, subject) => sum + this.getSubjectScoreIndex(subject) + 1, 0);
+  }
+
+  // Updated getTotalRequiredScore method using the helper function
+  getTotalRequiredScore(applicantType) {
+    return this.getTotalRequiredScoreForApplicantType(applicantType);
+  }
+
+  // Helper function to check if an applicant passes the selection
   isApplicantPassed(applicant, passingScore, sciencePassingMarks, humanitiesPassingMarks) {
     const totalScore = applicant.getTotalScore();
-    const isScience = applicant.isScienceApplicant();
+    const isScience = applicant.isApplicantOfType('science');
 
     if (totalScore < passingScore) {
       return false;
@@ -247,6 +241,23 @@ class UI {
     document.getElementById('result').textContent = `Number of applicants who passed the two-stage selection: ${passedApplicantsCount}`;
   }
 
+  // Helper function to check if an applicant passes the selection
+  isApplicantPassed(applicant, passingScore, sciencePassingMarks, humanitiesPassingMarks) {
+    const totalScore = applicant.getTotalScore();
+    const isScience = applicant.isApplicantOfType('science');
+
+    if (totalScore < passingScore) {
+      return false;
+    }
+
+    const requiredPassingMarks = isScience ? sciencePassingMarks : humanitiesPassingMarks;
+    const applicantSubjects = isScience ? this.exam.scienceApplicantSubjects : this.exam.humanitiesApplicantSubjects;
+
+    const subjectPassingMarks = applicantSubjects.reduce((sum, subject) => sum + applicant.getSubjectScore(this.exam.getSubjectScoreIndex(subject)), 0);
+
+    return subjectPassingMarks >= requiredPassingMarks;
+  }
+
   // Method to add a new subject to the list of subjects
   addSubjectToList() {
     const subjectNameInput = document.getElementById('subjectToAdd');
@@ -312,4 +323,6 @@ document.getElementById('deleteSubjectButton').addEventListener('click', ui.dele
 document.getElementById('calculateButton').addEventListener('click', ui.submitForm.bind(ui));
 
 // Event listener for the modifying applicant subjects
-document.querySelectorAll('input[type="checkbox"]').forEach((checkbox) => {checkbox.addEventListener("change", modifySelectedCheckboxes);})
+document.querySelectorAll('input[type="checkbox"]').forEach((checkbox) => {
+  checkbox.addEventListener("change", modifySelectedCheckboxes);
+});
