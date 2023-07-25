@@ -328,7 +328,7 @@ class UI {
     const message = this.exam.addSubject(subjectName);
 
     // Display the result message on the webapp
-    alert(`${subjectName} has been added.`);
+    alert(message);
 
     subjectNameInput.value = ''; // Clear the input field after adding the subject
     this.createApplicantFields(); // Recreate applicant fields to include the new subject in the input fields
@@ -350,7 +350,7 @@ class UI {
     const message = this.exam.deleteSubject(subjectName);
 
     // Display the deleted subject on the webapp
-    alert(`${subjectName} has been deleted.`);
+    alert(message);
 
     subjectNameInput.value = ''; // Clear the input field after deleting the subject
     this.createApplicantFields(); // Recreate applicant fields to exclude the deleted subject from the input fields
