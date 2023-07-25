@@ -1,7 +1,7 @@
 **Documentation for the Code:**
 
 **1. Applicant Class:**
-- The `Applicant` class represents an applicant for the university entrance examination. It contains information about the applicant's type (Science or Humanities) and their scores in different subjects.
+- The `Applicant` class represents an applicant of the university entrance examination. It contains information about the applicant's type (Science or Humanities) and their scores in different subjects.
 - Constructor: When an applicant object is created, it requires two pieces of information:
   - `applicantType`: The type of the applicant, which can be "Science" or "Humanities."
   - `scores`: An array that stores the scores of the applicant in different subjects.
