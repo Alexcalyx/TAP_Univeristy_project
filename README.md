@@ -6,11 +6,11 @@ This project works on three classes: "Applicant," "Exam," and "UI." These classe
 
 1. When the web page loads, an instance of the "UI" class is created to handle user interactions.
 
-2. The initial passing score and passing marks are displayed on the web page.
+2. The initial passing score and category specific passing marks are displayed on the web page.
 
-3. The user can update the passing score and passing marks by entering new values and clicking on the "Update" buttons next to each value.
+3. The user can update the passing score and category specific passing marks by entering new values and clicking on the "Update" buttons next to each value.
 
-4. The user can enter the number of applicants they want to add and click the "Submit" button. This creates input fields for each applicant, where the user can enter the applicant type (Science or Humanities) and scores for each subject.
+4. The user can enter the number of applicants they want to add and click the "Submit" button. This creates input fields for each applicant, where the user can enter the applicant type (Science or Humanities) and marks for each subject.
 
 5. After filling out the applicant details, the user clicks the "Calculate Results" button, which triggers the calculation of the number of applicants who pass the two-stage selection process based on the passing score and passing marks. The result is displayed on the web page.
 
