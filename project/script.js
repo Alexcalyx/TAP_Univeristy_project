@@ -231,8 +231,8 @@ class UI {
     for (let i = 1; i <= numberOfApplicants; i++) {
       // Create a fieldset element to group the applicant data
       const applicantFieldset = document.createElement('fieldset');
-      applicantFieldset.innerHTML = `<legend>Applicant ${i} Scores:</legend>
-      <label for="applicantType${i}">Applicant Type:</label>
+      applicantFieldset.innerHTML = `<legend> [ Applicant ${i} ] </legend>
+      <label for="applicantType${i}">Applicant Type :</label>
       <select id="applicantType${i}" name="applicantType${i}">
         <option value="science">Science</option>
         <option value="humanities">Humanities</option>
@@ -242,7 +242,7 @@ class UI {
       // Create input fields for subject scores for each applicant
       for (const subject of this.exam.subjects) {
         applicantFieldset.innerHTML += `
-        <label for="${subject}${i}">${subject} Score:</label>
+        <label for="${subject}${i}">${subject} :</label>
         <input type="number" id="${subject}${i}" name="${subject}${i}" value="0" required>
         <br>`;
       }
