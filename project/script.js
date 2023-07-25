@@ -155,6 +155,10 @@ class UI {
 
     // Show an alert to confirm the passing score update
     alert(`Passing score has been updated to ${this.passingScore}.`);
+
+    // Clear the input field by setting its value to an empty string
+    document.getElementById('newPassingScore').value = '';
+
   }
 
   // Method to update the passing marks for Science applicants
@@ -176,6 +180,10 @@ class UI {
 
     // Show an alert to confirm the Science passing marks update
     alert(`Science passing marks have been updated to ${this.sciencePassingMarks}.`);
+
+    // Clear the input field by setting its value to an empty string
+    document.getElementById('sciencePassingMarks').value = '';
+
   }
 
   // Method to update the passing marks for Humanities applicants
@@ -197,6 +205,10 @@ class UI {
 
     // Show an alert to confirm the Humanities passing marks update
     alert(`Humanities passing marks have been updated to ${this.humanitiesPassingMarks}.`);
+
+    // Clear the input field by setting its value to an empty string
+    document.getElementById('humanitiesPassingMarks').value = '';
+
   }
 
   // Method to create input fields for entering applicant data
@@ -241,6 +253,7 @@ class UI {
 
     // Show the calculate results button after creating applicant fields
     document.getElementById('calculateButton').style.display = 'block';
+
   }
 
   // Method to collect applicant data from the input fields
@@ -290,9 +303,13 @@ class UI {
   // Method to submit the applicant data and calculate the number of passed applicants
   submitForm() {
     const applicants = this.collectApplicantData(); // Collect the applicant data from the input fields
+    
     // Calculate the number of applicants who passed the two-stage selection based on the passing score and passing marks
     const passedApplicantsCount = this.exam.countPassedApplicants(applicants, this.passingScore, this.sciencePassingMarks, this.humanitiesPassingMarks);
     document.getElementById('result').textContent = `Number of applicants who passed the two-stage selection: ${passedApplicantsCount}`; // Display the result on the webapp
+    
+    // Show the result after creating applicant fields
+    document.getElementById('result').style.display = 'block';
   }
 
   // Method to add a new subject to the list of subjects
@@ -307,14 +324,11 @@ class UI {
       return;
     }
 
-    // Get the message element to display the result of adding the subject
-    const addSubjectMessage = document.getElementById('addSubjectMessage');
-
     // Call the addSubject method of the exam object to add the new subject and get the result message
     const message = this.exam.addSubject(subjectName);
 
     // Display the result message on the webapp
-    addSubjectMessage.textContent = message;
+    alert(`${subjectName} has been added.`);
 
     subjectNameInput.value = ''; // Clear the input field after adding the subject
     this.createApplicantFields(); // Recreate applicant fields to include the new subject in the input fields
@@ -332,14 +346,11 @@ class UI {
       return;
     }
 
-    // Get the message element to display the result of deleting the subject
-    const deleteSubjectMessage = document.getElementById('deleteSubjectMessage');
-
     // Call the deleteSubject method of the exam object to delete the subject and get the result message
     const message = this.exam.deleteSubject(subjectName);
 
-    // Display the result message on the webapp
-    deleteSubjectMessage.textContent = message;
+    // Display the deleted subject on the webapp
+    alert(`${subjectName} has been deleted.`);
 
     subjectNameInput.value = ''; // Clear the input field after deleting the subject
     this.createApplicantFields(); // Recreate applicant fields to exclude the deleted subject from the input fields

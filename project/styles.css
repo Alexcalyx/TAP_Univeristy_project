@@ -1,59 +1,128 @@
 body {
-    font-family: Arial, sans-serif;
-    margin: 20px;
-  }
-  
-  h2 {
-    margin-bottom: 20px;
-  }
-  
-  form {
-    margin-bottom: 20px;
-  }
-  
-  .change-passing-score {
-    margin-bottom: 20px;
-  }
-  
-  .subject-container {
-    margin-bottom: 20px;
-  }
-  
-  .top-right {
-    position: absolute;
-    top: 10px;
-    right: 20px;
-    text-align: right;
-  }
-  
-  .top-right p {
-    margin: 5px 0;
-  }
-  
-  #applicantFields fieldset {
-    margin-bottom: 20px;
-  }
-  
-  #applicantFields label {
-    display: inline-block;
-    width: 150px;
-  }
-  
-  #calculateButton {
-    margin-top: 20px;
-  }
-  
-  #result {
-    margin-top: 20px;
-    font-weight: bold;
-  }
-  
-  #passingScore {
-    font-weight: bold;
-  }
-  
-  #scienceSubjects,
-  #humanitiesSubjects {
-    font-style: italic;
-  }
-  
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f0f0f0;
+}
+
+.container {
+  max-width: 600px;
+  margin: 30px auto;
+  background-color: #ffffff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.form-container {
+  background-color: #f9f9f9;
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+}
+
+.form-group {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  width: 250px;
+  margin-right: 10px;
+}
+
+.form-group input[type="number"],
+.form-group input[type="text"] {
+  flex: 1;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+.form-group button {
+  padding: 8px 15px;
+  background-color: #007bff;
+  color: #ffffff;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.form-group button:hover {
+  background-color: #0056b3;
+}
+
+.subject-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.subject-container label {
+  width: 150px;
+  margin-right: 10px;
+}
+
+.subject-container input[type="text"] {
+  flex: 1;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+.subject-container button {
+  padding: 8px 15px;
+  background-color: #007bff;
+  color: #ffffff;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.subject-container button:hover {
+  background-color: #0056b3;
+}
+
+#applicantFields {
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+}
+
+#applicantFields fieldset {
+  margin-bottom: 20px;
+}
+
+#applicantFields label {
+  display: inline-block;
+  width: 150px;
+}
+
+#calculateButton {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  background-color: #007bff;
+  color: #ffffff;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+#calculateButton:hover {
+  background-color: #0056b3;
+}
+
+#result {
+  font-weight: bold;
+  text-align: center;
+  padding: 10px;
+  border: 2px solid #007bff;
+  border-radius: 5px;
+}
