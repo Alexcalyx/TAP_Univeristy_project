@@ -1,3 +1,5 @@
+Website link : https://tap-university-project.netlify.app
+
 **Summary:**
 
 This project works on three classes: "Applicant," "Exam," and "UI." These classes work together to manage an entrance examination for a university, where applicants are classified into two types: "Science" and "Humanities." Each applicant has scores in different subjects, and the system calculates the total score of each applicant and determines if they pass the selection based on passing scores and passing marks for their respective applicant types.
